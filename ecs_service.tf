@@ -1,6 +1,6 @@
 resource "aws_ecs_service" "example-service" {
   count           = "1"
-  name            = "example-service"
+  name            = "${var.naming}-example-service"
   cluster         = "${aws_ecs_cluster.main.id}"
   task_definition = "${aws_ecs_task_definition.example-service.arn}"
   desired_count   = 1
@@ -27,6 +27,6 @@ data "template_file" "task" {
 }
 
 resource "aws_ecs_task_definition" "example-service" {
-  family                = "example-service"
+  family                = "${var.naming}-example-service"
   container_definitions = "${data.template_file.task.rendered}"
 }

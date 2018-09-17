@@ -1,5 +1,5 @@
 resource "aws_lb" "lb" {
-  name                       = "loadbalancer"
+  name                       = "${var.naming}-loadbalancer"
   security_groups            = ["${aws_security_group.sg-loadbalancer.id}"]
   subnets                    = ["${aws_subnet.subnet-a.id}", "${aws_subnet.subnet-b.id}"]
   enable_deletion_protection = false
@@ -17,7 +17,7 @@ resource "aws_lb_listener" "lb-http" {
 }
 
 resource "aws_lb_target_group" "example-service" {
-  name                 = "example-service"
+  name                 = "${var.naming}-example-service"
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = "${aws_vpc.vpc.id}"
