@@ -1,0 +1,16 @@
+[
+    {
+        "name": "web",
+        "image": "nginx:${image_version}",
+        "cpu": 4,
+        "memory": 128,
+        "essential": true,
+        "portMappings": [
+            {
+                "containerPort": 80,
+                "hostPort": 0,
+                "protocol": "tcp"
+            }
+        ]
+    }
+]

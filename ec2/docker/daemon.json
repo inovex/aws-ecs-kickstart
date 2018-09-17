@@ -1,0 +1,9 @@
+        {
+          "log-driver": "json-file",
+          "log-opts": {
+                "max-size": "10m",
+                "max-file": "10",
+                "mode": "non-blocking",
+                "labels": "container_name,docker_image,task_name"
+          }
+        }

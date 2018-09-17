@@ -1,0 +1,21 @@
+        --- 
+        version: '2.2'
+        services:
+
+          ecs-agent:
+            container_name: ecs-agent
+            image: amazon/amazon-ecs-agent:latest
+            volumes:
+              - /var/run:/var/run
+              - /var/log/ecs/:/log
+              - /var/lib/ecs/data:/data 
+              - /etc/ecs:/etc/ecs 
+            restart: always
+            privileged: true
+            network_mode: host
+            env_file:
+              - /etc/ecs/ecs.config
+            labels:
+              container_name: "ecs-agent"
+              docker_image: "amazon/amazon-ecs-agent:latest"
+              task_name: "ecs-agent"
