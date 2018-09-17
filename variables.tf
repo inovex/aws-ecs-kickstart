@@ -1,5 +1,5 @@
 variable "naming" {
-  default = "akoehler"
+  default = "shrek"
 }
 
 variable "ec2_ami" {
