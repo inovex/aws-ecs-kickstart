@@ -11,3 +11,4 @@ this sets up an AWS ecs cluster and starts an example nginx container.
 
     # terraform apply
 ```
+|![overview](./overview.png "Overview")

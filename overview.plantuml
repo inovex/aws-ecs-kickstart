@@ -1,0 +1,51 @@
+@startuml overview
+
+actor "user"
+
+rectangle aws.lb {
+  rectangle "targetgroup" {
+    component "targetgroup.1"
+  }
+  rectangle "loadbalancer" {
+    component "loadbalancer.listener"
+  }
+}
+
+rectangle aws.ec2 {
+  node "ec2.instance" {
+    node "docker.daemon" {
+      component "nginx.container"
+      component "ecs.agent"
+    }
+  }
+}
+
+rectangle aws.ecs {
+  rectangle ecs.cluster.1 {
+    node "ecs.service.1" {
+      component "ecs.task.41"
+      component "ecs.task.42"
+    }
+  }
+}
+
+user ==|> loadbalancer.listener : connect
+loadbalancer.listener ==|> targetgroup.1 : forwards
+targetgroup.1 ==|> nginx.container
+
+ecs.service.1 #-[#0000FF]-> targetgroup.1 : register active containers
+ecs.task.42 #-[#0000FF]-> nginx.container : defines 
+ecs.agent #-[#0000FF]-> ecs.cluster.1 : registers
+
+note top of ecs.task.42 : A task defines how \n to launch a container
+note top of ecs.task.41 : Old task defintions are \n stored for fallback.
+
+
+note "The ECS service describes \n how the scheduler launches container." as ecs.service.note
+note "Targetgroups is an \n abstraction layer \n wich matches the user \n request into container that will serve \n that request." as targetgroup.1.note
+
+ecs.service.note .. ecs.service.1
+targetgroup.1 .. targetgroup.1.note 
+
+
+@enduml
